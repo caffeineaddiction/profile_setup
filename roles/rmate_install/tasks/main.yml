@@ -1,4 +1,8 @@
 ---
+  - name: Debug target_user
+    debug:
+      msg: "target_user is {{ target_user }}"
+
   - name: Ensure ~/bin directory exists
     file:
       path: "/home/{{ target_user }}/bin"
