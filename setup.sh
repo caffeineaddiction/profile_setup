@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# ansible-core
+#yum install -y ansible-core
 
-/usr/bin/ansible-pull -U ssh://git@github.com:caffeineaddiction/profile_setup.git -e "target_user=${SUDO_USER:-$(whoami)}" setup.yml
+ansible-pull -U https://github.com/caffeineaddiction/profile_setup.git -C "master" -e "target_user=${SUDO_USER:-$(whoami)}" --skip-tags vault -i localhost, setup.yml
