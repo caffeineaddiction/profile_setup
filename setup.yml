@@ -2,7 +2,6 @@
 - name: Initial Setup
   hosts: all
   become: yes
-  gather_facts: no
   roles:
     - git_install
     - rmate_install
