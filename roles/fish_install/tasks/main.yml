@@ -1,0 +1,86 @@
+---
+  - name: Ensure tar is installed
+    package:
+      name: tar
+      state: present
+
+  - name: Create ~/bin directory for the user
+    file:
+      path: "/home/{{ target_user }}/bin"
+      state: directory
+      mode: '0755'
+    become_user: "{{ target_user }}"
+
+  - name: Add fish repo for AlmaLinux 9
+    ansible.builtin.yum_repository:
+      name: shells_fish_release_3
+      description: OpenSUSE Fish Shell Repository
+      baseurl: https://download.opensuse.org/repositories/shells:/fish:/release:/3/CentOS_8/
+      enabled: yes
+      gpgcheck: no
+    when: ansible_facts['distribution'] == 'AlmaLinux' and ansible_facts['distribution_major_version'] == '9'
+
+  - name: Install fish shell
+    package:
+      name: fish
+      state: present
+
+  - name: Check if Oh My Fish is already installed
+    stat:
+      path: "/home/{{ target_user }}/.local/share/omf"
+    register: omf_installed
+    become_user: "{{ target_user }}"
+
+  - name: Remove existing Oh My Fish installation if found
+    file:
+      path: "/home/{{ target_user }}/.local/share/omf"
+      state: absent
+    when: omf_installed.stat.exists
+    become_user: "{{ target_user }}"
+
+  - name: Download Oh My Fish installation script
+    get_url:
+      url: https://get.oh-my.fish
+      dest: /tmp/install_omf.fish
+      mode: '0755'
+    become_user: "{{ target_user }}"
+    when: not omf_installed.stat.exists or omf_installed.stat.exists
+
+  - name: Install Oh My Fish
+    shell: fish /tmp/install_omf.fish --noninteractive --path=/home/{{ target_user }}/.local/share/omf --config=/home/{{ target_user }}/.config/omf
+    become_user: "{{ target_user }}"
+    when: not omf_installed.stat.exists or omf_installed.stat.exists
+
+  - name: Remove Oh My Fish installation script
+    file:
+      path: /tmp/install_omf.fish
+      state: absent
+    become_user: "{{ target_user }}"
+    when: not omf_installed.stat.exists or omf_installed.stat.exists
+
+  - name: Install bira theme with Oh My Fish
+    shell: |
+      fish -c 'set -gx PATH $HOME/.local/bin $PATH; omf install bira'
+    become_user: "{{ target_user }}"
+
+  - name: Create fish configuration file
+    copy:
+      dest: "/home/{{ target_user }}/.config/fish/config.fish"
+      content: |
+        set --path PATH $HOME/bin:$PATH
+        set -x SSH_AUTH_SOCK $HOME/.ssh/$USER-ssh-agent
+
+        set fish_greeting
+      mode: '0644'
+    become_user: "{{ target_user }}"
+
+  - name: Update .bashrc to execute fish
+    blockinfile:
+      path: "/home/{{ target_user }}/.bashrc"
+      block: |
+        if [[ $- = *i* ]] && command -v fish >/dev/null 2>&1; then
+          exec fish
+        fi
+      marker: "# {mark} ANSIBLE MANAGED BLOCK for fish shell"
+      create: yes
+    become_user: "{{ target_user }}"

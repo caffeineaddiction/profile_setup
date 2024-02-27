@@ -1,0 +1,7 @@
+---
+# tasks file for git_install
+
+- name: Ensure git is installed
+  package:
+    name: git
+    state: present
