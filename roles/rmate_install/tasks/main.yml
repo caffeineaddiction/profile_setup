@@ -4,6 +4,7 @@
       path: "/home/{{ target_user }}/bin"
       state: directory
       mode: '0755'
+    become: yes
     become_user: "{{ target_user }}"
 
   - name: Download rmate
@@ -11,6 +12,7 @@
       url: https://gist.githubusercontent.com/caffeineaddiction/56d37289ac5dbe65807f33af76165ae6/raw/45e4beda7d11082ce6fd912e653381f765c06f5b/rmate
       dest: "/home/{{ target_user }}/bin/rmate"
       mode: '0755'
+    become: yes
     become_user: "{{ target_user }}"
 
   - name: Download rmate.sh
@@ -18,6 +20,7 @@
       url: https://gist.githubusercontent.com/caffeineaddiction/aec0c626537d03827317032f9ece67ec/raw/86d1372d5a46415dfeb5db73bcb32af20d43d26d/gistfile1.txt
       dest: "/home/{{ target_user }}/bin/rmate.sh"
       mode: '0755'
+    become: yes
     become_user: "{{ target_user }}"
 
   - name: Download sudo
@@ -25,6 +28,7 @@
       url: https://gist.githubusercontent.com/caffeineaddiction/0775ea06f3a7a94023f441c842aba884/raw/2af67fa53a41f36964d5d4d4c2febc08d32f35af/sudo
       dest: "/home/{{ target_user }}/bin/sudo"
       mode: '0755'
+    become: yes
     become_user: "{{ target_user }}"
 
   - name: Download sudo
@@ -32,4 +36,5 @@
       url: https://gist.githubusercontent.com/caffeineaddiction/f6c492535063cc09a620ae30a5a6f587/raw/00a5f7feccb3c18e313831e9f20126451b9a8618/git-keys
       dest: "/home/{{ target_user }}/bin/git-keys"
       mode: '0755'
+    become: yes
     become_user: "{{ target_user }}"
