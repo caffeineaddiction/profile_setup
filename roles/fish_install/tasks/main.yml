@@ -84,3 +84,9 @@
       marker: "# {mark} ANSIBLE MANAGED BLOCK for fish shell"
       create: yes
     become_user: "{{ target_user }}"
+
+  - name: Remove Fish Repository
+    ansible.builtin.yum_repository:
+      name: shells_fish_release_3
+      state: absent
+    when: ansible_facts['distribution'] == 'AlmaLinux' and ansible_facts['distribution_major_version'] == '9'
