@@ -44,6 +44,9 @@
       dest: /tmp/install_omf.fish
       mode: '0755'
     become_user: "{{ target_user }}"
+    environment:
+      http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
+      https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
     when: not omf_installed.stat.exists or omf_installed.stat.exists
 
   - name: Install Oh My Fish
