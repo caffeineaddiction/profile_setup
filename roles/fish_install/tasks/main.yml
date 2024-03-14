@@ -52,6 +52,9 @@
   - name: Install Oh My Fish
     shell: fish /tmp/install_omf.fish --noninteractive --path=/home/{{ target_user }}/.local/share/omf --config=/home/{{ target_user }}/.config/omf
     become_user: "{{ target_user }}"
+    environment:
+      http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
+      https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
     when: not omf_installed.stat.exists or omf_installed.stat.exists
 
   - name: Remove Oh My Fish installation script
