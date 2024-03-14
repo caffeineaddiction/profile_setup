@@ -66,7 +66,7 @@
 
   - name: Install bira theme with Oh My Fish
     shell: |
-      fish -c 'set -gx PATH $HOME/.local/bin $PATH; omf install bira'
+      fish -c 'set -gx http_proxy "{{ lookup('env', 'http_proxy') }}"; set -gx https_proxy "{{ lookup('env', 'https_proxy') }}"; set -gx PATH $HOME/.local/bin $PATH; omf install bira'
     become_user: "{{ target_user }}"
 
   - name: Create fish configuration file
