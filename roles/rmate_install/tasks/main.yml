@@ -46,7 +46,7 @@
 
 - name: Download git-keys
   get_url:
-    url: https://gist.githubusercontent.com/caffeineaddiction/f6c492535063cc09a620ae30a5a6f587/raw/00a5f7feccb3c18e313831e9f20126451b9a8618/git-keys
+    url: https://gist.githubusercontent.com/caffeineaddiction/788c87000de438967bdd35e7f40e2916/raw/0e101701d063a9d4c9c35a8a00133f7c2c9a74b3/get-keys
     dest: "/home/{{ target_user }}/bin/git-keys"
     mode: '0755'
   become: yes
