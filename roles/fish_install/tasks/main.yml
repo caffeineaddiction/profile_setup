@@ -40,7 +40,7 @@
 
   - name: Download Oh My Fish installation script
     get_url:
-      url: https://get.oh-my.fish
+      url: https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
       dest: /tmp/install_omf.fish
       mode: '0755'
     become_user: "{{ target_user }}"
