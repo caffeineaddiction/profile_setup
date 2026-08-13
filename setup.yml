@@ -4,5 +4,4 @@
   become: yes
   roles:
     - git_install
-    - rmate_install
     - fish_install
