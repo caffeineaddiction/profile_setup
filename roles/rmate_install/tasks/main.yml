@@ -19,8 +19,8 @@
   become: yes
   become_user: "{{ target_user }}"
   environment:
-    http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
-    https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
+    http_proxy: "{{ lookup('env', 'http_proxy') | default('', true) }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') | default('', true) }}"
 
 - name: Download rmate.sh
   get_url:
@@ -30,8 +30,8 @@
   become: yes
   become_user: "{{ target_user }}"
   environment:
-    http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
-    https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
+    http_proxy: "{{ lookup('env', 'http_proxy') | default('', true) }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') | default('', true) }}"
 
 - name: Download sudo
   get_url:
@@ -41,8 +41,8 @@
   become: yes
   become_user: "{{ target_user }}"
   environment:
-    http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
-    https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
+    http_proxy: "{{ lookup('env', 'http_proxy') | default('', true) }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') | default('', true) }}"
 
 - name: Download git-keys
   get_url:
@@ -52,8 +52,8 @@
   become: yes
   become_user: "{{ target_user }}"
   environment:
-    http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
-    https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
+    http_proxy: "{{ lookup('env', 'http_proxy') | default('', true) }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') | default('', true) }}"
 
 - name: Download get-keys
   get_url:
@@ -63,5 +63,5 @@
   become: yes
   become_user: "{{ target_user }}"
   environment:
-    http_proxy: "{% if lookup('env', 'http_proxy') %}{{ lookup('env', 'http_proxy') }}{% endif %}"
-    https_proxy: "{% if lookup('env', 'https_proxy') %}{{ lookup('env', 'https_proxy') }}{% endif %}"
+    http_proxy: "{{ lookup('env', 'http_proxy') | default('', true) }}"
+    https_proxy: "{{ lookup('env', 'https_proxy') | default('', true) }}"
